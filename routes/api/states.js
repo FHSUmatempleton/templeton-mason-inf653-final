@@ -1,13 +1,30 @@
 const express = require('express');
 const router = express.Router();
-const stateController = require('../../controllers/stateController');
-const statesData = require('../../models/statesData.json');
+const statesController = require('../../controllers/statesController');
 const verifyStates = require('../../middleware/verifyStates');
 
 router.route('/')
-	.get(stateController.getAllStates);
-	
+  .get(statesController.getAllStates);
+
 router.route('/:state')
-	.get(verifyStates(statesData), stateController.getState);
+	.get(verifyStates(), statesController.getState);
+
+router.route('/:state/funfact')
+  .get(verifyStates(), statesController.getFunfact)
+  .post(statesController.createFunfact)
+  .patch(statesController.updateFunfact)
+  .delete(statesController.deleteFunfact);
+
+router.route('/:state/capital')
+  .get(verifyStates(), statesController.getCapital);
+
+router.route('/:state/nickname')
+  .get(verifyStates(), statesController.getNickname);
+
+router.route('/:state/population')
+  .get(verifyStates(), statesController.getPopulation);
+
+router.route('/:state/admission')
+  .get(verifyStates(), statesController.getAdmission);
 
 module.exports = router;
